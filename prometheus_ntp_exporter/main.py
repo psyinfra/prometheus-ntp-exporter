@@ -21,12 +21,13 @@ def parse_args():
         default=f':{DEFAULT_PORT}',
         help=f'Address and port to listen on (default = :{DEFAULT_PORT})')
     parser.add_argument(
-        '--ntp.server',
-        dest='ntp_server',
+        '--ntp.servers',
+        dest='ntp_servers',
         required=False,
         type=str,
-        default='europe.pool.ntp.org',
-        help='Address of target NTP server')
+        nargs='+',
+        default=['europe.pool.ntp.org'],
+        help='Addresses of one or more target NTP servers')
     parser.add_argument(
         '--ntp.version',
         dest='ntp_version',
@@ -66,14 +67,14 @@ def main():
         listen_addr = urllib.parse.urlsplit(f'//{args.listen_address}')
         addr = listen_addr.hostname if listen_addr.hostname else '0.0.0.0'
         port = listen_addr.port if listen_addr.port else DEFAULT_PORT
-        logger.info(f'Target NTP server: {args.ntp_server}')
+        logger.info(f'Target NTP server(s): {args.ntp_servers}')
         logger.info(f'NTP version: {args.ntp_version}')
 
         if args.extended:
             logger.info('Exporting extended timestamp data')
 
         REGISTRY.register(NTPExporter(
-            ntp_server=args.ntp_server,
+            ntp_servers=args.ntp_servers,
             ntp_version=args.ntp_version,
             extended=args.extended))
         start_http_server(port, addr=addr)

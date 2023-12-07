@@ -12,8 +12,8 @@ pip install .
 
 ## Usage
 
-    usage: prometheus_ntp_exporter [-h] [-w LISTEN_ADDRESS] [--ntp.server NTP_SERVER] [--ntp.version NTP_VERSION] [-e]
-                                   [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
+    usage: prometheus_ntp_exporter [-h] [-w LISTEN_ADDRESS] [--ntp.servers NTP_SERVERS [NTP_SERVERS ...]]
+                                   [--ntp.version NTP_VERSION] [-e] [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
     
     Python-based Prometheus exporter for NTP client statistics
     
@@ -21,8 +21,8 @@ pip install .
       -h, --help            show this help message and exit
       -w LISTEN_ADDRESS, --web.listen-address LISTEN_ADDRESS
                             Address and port to listen on (default = :10006)
-      --ntp.server NTP_SERVER
-                            Address of target NTP server
+      --ntp.servers NTP_SERVERS [NTP_SERVERS ...]
+                            Addresses of one or more target NTP servers
       --ntp.version NTP_VERSION
                             NTP version
       -e, --extended        Export transmit, receive, originate, and reference timestamps in system time
@@ -32,7 +32,7 @@ pip install .
 
 ### Usage example
 ```commandline
-prometheus_ntp_exporter --web.listen-address :10006 --ntp.server europe.pool.ntp.org --ntp.version 3
+prometheus_ntp_exporter --web.listen-address :10006 --ntp.servers europe.pool.ntp.org --ntp.version 3
 ```
 
 This command exports the NTP response data requested from `europe.pool.ntp.org` using NTP version 3.
@@ -52,3 +52,13 @@ ntp_delay{server="europe.pool.ntp.org",version="3"} 0.021947860717773438
 # TYPE ntp_leap gauge
 ntp_leap{server="europe.pool.ntp.org",version="3"} 0.0
 ```
+
+## Multiple NTP servers
+Multiple NTP servers can be specified, but the same NTP version will be used 
+for each of them. Example:
+
+```commandline
+prometheus_ntp_exporter --ntp.servers europe.pool.ntp.org de.pool.ntp.org --ntp.version 3
+```
+
+This will export NTP statistics from both `europe.pool.ntp.org` and `de.pool.ntp.org` using NTP version 3.
