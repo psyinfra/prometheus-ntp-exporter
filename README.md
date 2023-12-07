@@ -1,7 +1,7 @@
 # prometheus-ntp-exporter
-A Python-based Prometheus exporter for NTP statistics that sends a request to 
-an NTP server using [ntplib](https://github.com/cf-natali/ntplib) and exports 
-the response via the Prometheus client.
+A Python-based Prometheus exporter for NTP client statistics that sends a 
+request to an NTP server using [ntplib](https://github.com/cf-natali/ntplib) 
+and exports the response via the Prometheus client.
 
 ## Installation
 ```commandline

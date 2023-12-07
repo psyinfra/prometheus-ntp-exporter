@@ -11,7 +11,8 @@ from .exporter import NTPExporter
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description='Python-based Prometheus exporter for NTP time offset')
+        description=(
+            'Python-based Prometheus exporter for NTP client statistics'))
     parser.add_argument(
         '-w', '--web.listen-address',
         dest='listen_address',
