@@ -41,7 +41,7 @@ def parse_args():
         type=str,
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         default='WARNING',
-        help='Specify logging level')
+        help='Specify logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)')
     return parser.parse_args()
 
 
