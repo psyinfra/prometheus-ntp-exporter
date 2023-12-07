@@ -39,9 +39,9 @@ This command exports the NTP response data requested from `europe.pool.ntp.org` 
 
 ### Output example
 ```text
-# HELP ntp_ntpexception Connection to the NTP server has timed out (1=True, 0=False)
-# TYPE ntp_ntpexception gauge
-ntp_ntpexception{server="europe.pool.ntp.org",version="4"} 0.0
+# HELP ntp_ntplib_error Connection to the NTP server has timed out (1=True, 0=False)
+# TYPE ntp_ntplib_error gauge
+ntp_ntplib_error{server="europe.pool.ntp.org",version="4"} 0.0
 # HELP ntp_offset offset
 # TYPE ntp_offset gauge
 ntp_offset{server="europe.pool.ntp.org",version="4"} 0.0011394023895263672

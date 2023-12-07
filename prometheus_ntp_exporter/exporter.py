@@ -11,7 +11,7 @@ logger = logging.getLogger('prometheus_ntp_exporter')
 
 # Measure collection time
 REQUEST_TIME = Summary(
-    'ntp_collector_collect_seconds',
+    f'{EXPORTER_PREFIX}_collector_collect_seconds',
     'Time spent to collect metrics from the NTP server')
 
 
@@ -36,7 +36,7 @@ class NTPExporter:
                 logger.error(f'NTPException({exc})')
 
             g = GaugeMetricFamily(
-                name=f'{EXPORTER_PREFIX}_ntpexception',
+                name=f'{EXPORTER_PREFIX}_ntplib_error',
                 labels=['server', 'version'],
                 documentation=(
                     'Connection to the NTP server has timed out (1=True, '
