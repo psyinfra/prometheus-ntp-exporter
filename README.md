@@ -32,25 +32,25 @@ pip install .
 
 ### Usage example
 ```commandline
-prometheus_ntp_exporter --web.listen-address :10006 --ntp.servers europe.pool.ntp.org --ntp.version 3
+prometheus_ntp_exporter --web.listen-address :10006 --ntp.servers europe.pool.ntp.org --ntp.version 4
 ```
 
-This command exports the NTP response data requested from `europe.pool.ntp.org` using NTP version 3.
+This command exports the NTP response data requested from `europe.pool.ntp.org` using NTP version 4.
 
 ### Output example
 ```text
 # HELP ntp_ntpexception Connection to the NTP server has timed out (1=True, 0=False)
 # TYPE ntp_ntpexception gauge
-ntp_ntpexception{server="europe.pool.ntp.org",version="3"} 0.0
+ntp_ntpexception{server="europe.pool.ntp.org",version="4"} 0.0
 # HELP ntp_offset offset
 # TYPE ntp_offset gauge
-ntp_offset{server="europe.pool.ntp.org",version="3"} 0.0030574798583984375
+ntp_offset{server="europe.pool.ntp.org",version="4"} 0.0011394023895263672
 # HELP ntp_delay round-trip delay
 # TYPE ntp_delay gauge
-ntp_delay{server="europe.pool.ntp.org",version="3"} 0.021947860717773438
+ntp_delay{server="europe.pool.ntp.org",version="4"} 0.03658151626586914
 # HELP ntp_leap Leap indicator
 # TYPE ntp_leap gauge
-ntp_leap{server="europe.pool.ntp.org",version="3"} 0.0
+ntp_leap{server="europe.pool.ntp.org",version="4"} 0.0
 ```
 
 ## Multiple NTP servers
@@ -58,7 +58,7 @@ Multiple NTP servers can be specified, but the same NTP version will be used
 for each of them. Example:
 
 ```commandline
-prometheus_ntp_exporter --ntp.servers europe.pool.ntp.org de.pool.ntp.org --ntp.version 3
+prometheus_ntp_exporter --ntp.servers europe.pool.ntp.org de.pool.ntp.org --ntp.version 4
 ```
 
-This will export NTP statistics from both `europe.pool.ntp.org` and `de.pool.ntp.org` using NTP version 3.
+This will export NTP statistics from both `europe.pool.ntp.org` and `de.pool.ntp.org` using NTP version 4.

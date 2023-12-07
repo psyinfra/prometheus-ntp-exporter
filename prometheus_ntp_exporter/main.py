@@ -33,7 +33,7 @@ def parse_args():
         dest='ntp_version',
         required=False,
         type=int,
-        default=3,
+        default=4,
         help='NTP version')
     parser.add_argument(
         '-e', '--extended',
