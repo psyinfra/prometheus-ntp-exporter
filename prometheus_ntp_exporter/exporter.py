@@ -45,13 +45,6 @@ class NTPExporter:
             yield g
 
         g = GaugeMetricFamily(
-            name=f'{EXPORTER_PREFIX}_ntpexception',
-            labels=['server', 'version'],
-            documentation='NTPException (1 = True, 0 = False)')
-        g.add_metric(labels, 0)
-        yield g
-
-        g = GaugeMetricFamily(
             name=f'{EXPORTER_PREFIX}_offset',
             labels=['server', 'version'],
             documentation='offset')
