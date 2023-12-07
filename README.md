@@ -35,23 +35,59 @@ pip install .
 prometheus_ntp_exporter --web.listen-address :10006 --ntp.servers europe.pool.ntp.org --ntp.version 4
 ```
 
-This command exports the NTP response data requested from `europe.pool.ntp.org` using NTP version 4.
+This command exports the NTP response data requested from `europe.pool.ntp.org` using NTP version 4,
+with the following output:
 
-### Output example
 ```text
-# HELP ntp_ntplib_error Connection to the NTP server has timed out (1=True, 0=False)
+# HELP ntp_ntplib_error Python ntplib has encountered an error (1=True, 0=False)
 # TYPE ntp_ntplib_error gauge
 ntp_ntplib_error{server="europe.pool.ntp.org",version="4"} 0.0
-# HELP ntp_offset offset
+# HELP ntp_offset Time offset between the client and server time
 # TYPE ntp_offset gauge
 ntp_offset{server="europe.pool.ntp.org",version="4"} 0.0011394023895263672
-# HELP ntp_delay round-trip delay
+# HELP ntp_delay Round-trip time to transfer the NTP request over the network
 # TYPE ntp_delay gauge
 ntp_delay{server="europe.pool.ntp.org",version="4"} 0.03658151626586914
 # HELP ntp_leap Leap indicator
 # TYPE ntp_leap gauge
 ntp_leap{server="europe.pool.ntp.org",version="4"} 0.0
 ```
+
+### Extended usage example
+prometheus_ntp_exporter --web.listen-address :10006 --ntp.servers europe.pool.ntp.org --ntp.version 4 --extended
+
+The `--extended` argument adds transmit, receive, originate, and reference timestamp metrics:
+
+```text
+# HELP ntp_ntplib_error Python ntplib has encountered an error (1=True, 0=False)
+# TYPE ntp_ntplib_error gauge
+ntp_ntplib_error{server="europe.pool.ntp.org",version="4"} 0.0
+# HELP ntp_offset Time offset between the client and server time
+# TYPE ntp_offset gauge
+ntp_offset{server="europe.pool.ntp.org",version="4"} 0.0008738040924072266
+# HELP ntp_delay Round-trip time to transfer the NTP request over the network
+# TYPE ntp_delay gauge
+ntp_delay{server="europe.pool.ntp.org",version="4"} 0.05418825149536133
+# HELP ntp_leap Leap indicator
+# TYPE ntp_leap gauge
+ntp_leap{server="europe.pool.ntp.org",version="4"} 0.0
+# HELP ntp_tx_time Transmit timestamp in system time
+# TYPE ntp_tx_time gauge
+ntp_tx_time{server="europe.pool.ntp.org",version="4"} 1.7019662521828747e+09
+# HELP ntp_recv_time Receive timestamp in system time
+# TYPE ntp_recv_time gauge
+ntp_recv_time{server="europe.pool.ntp.org",version="4"} 1.7019662521826444e+09
+# HELP ntp_orig_time Originate timestamp in system time
+# TYPE ntp_orig_time gauge
+ntp_orig_time{server="europe.pool.ntp.org",version="4"} 1.7019662521546764e+09
+# HELP ntp_ref_time Reference timestamp in system time
+# TYPE ntp_ref_time gauge
+ntp_ref_time{server="europe.pool.ntp.org",version="4"} 1.701966210580937e+09
+# HELP ntp_dest_time Destination timestamp in system time
+# TYPE ntp_dest_time gauge
+ntp_dest_time{server="europe.pool.ntp.org",version="4"} 1.701966252209095e+09
+```
+
 
 ## Multiple NTP servers
 Multiple NTP servers can be specified, but the same NTP version will be used 

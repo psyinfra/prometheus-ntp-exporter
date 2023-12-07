@@ -39,7 +39,7 @@ class NTPExporter:
                 name=f'{EXPORTER_PREFIX}_ntplib_error',
                 labels=['server', 'version'],
                 documentation=(
-                    'Connection to the NTP server has timed out (1=True, '
+                    'Python ntplib has encountered an error (1=True, '
                     '0=False)'))
 
             if response is None:
@@ -53,14 +53,17 @@ class NTPExporter:
             g = GaugeMetricFamily(
                 name=f'{EXPORTER_PREFIX}_offset',
                 labels=['server', 'version'],
-                documentation='offset')
+                documentation=(
+                    'Time offset between the client and server time'))
             g.add_metric(labels, response.offset)
             yield g
 
             g = GaugeMetricFamily(
                 name=f'{EXPORTER_PREFIX}_delay',
                 labels=['server', 'version'],
-                documentation='round-trip delay')
+                documentation=(
+                    'Round-trip time to transfer the NTP request over the '
+                    'network'))
             g.add_metric(labels, response.delay)
             yield g
 
