@@ -12,54 +12,42 @@ pip install .
 
 ## Usage
 
-    usage: prometheus_ntp_exporter [-h] [-w LISTEN_ADDRESS] --ntp.server NTP_SERVER --ntp.version NTP_VERSION [-l LOG_LEVEL]
+    usage: prometheus_ntp_exporter [-h] [-w LISTEN_ADDRESS] [--ntp.server NTP_SERVER] [--ntp.version NTP_VERSION] [-e]
+                                   [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}]
     
-    Python-based Prometheus exporter for NTP time offset
+    Python-based Prometheus exporter for NTP client statistics
     
     optional arguments:
       -h, --help            show this help message and exit
       -w LISTEN_ADDRESS, --web.listen-address LISTEN_ADDRESS
-                            Address and port to listen on (default = :9951)
+                            Address and port to listen on (default = :10006)
       --ntp.server NTP_SERVER
                             Address of target NTP server
       --ntp.version NTP_VERSION
                             NTP version
-      -l LOG_LEVEL, --log LOG_LEVEL
+      -e, --extended        Export transmit, receive, originate, and reference timestamps in system time
+      -l {DEBUG,INFO,WARNING,ERROR,CRITICAL}, --log {DEBUG,INFO,WARNING,ERROR,CRITICAL}
                             Specify logging level
+
 
 ### Usage example
 ```commandline
-prometheus_ntp_exporter --web.listen-address :9951 --ntp.server europe.pool.ntp.org --ntp.version 3
+prometheus_ntp_exporter --web.listen-address :10006 --ntp.server europe.pool.ntp.org --ntp.version 3
 ```
 
 This command exports the NTP response data requested from `europe.pool.ntp.org` using NTP version 3.
 
 ### Output example
 ```text
-# HELP ntp_ntpexception NTPException (1 = True, 0 = False)
+# HELP ntp_ntpexception Connection to the NTP server has timed out (1=True, 0=False)
 # TYPE ntp_ntpexception gauge
 ntp_ntpexception{server="europe.pool.ntp.org",version="3"} 0.0
 # HELP ntp_offset offset
 # TYPE ntp_offset gauge
-ntp_offset{server="europe.pool.ntp.org",version="3"} 0.003192901611328125
+ntp_offset{server="europe.pool.ntp.org",version="3"} 0.0030574798583984375
 # HELP ntp_delay round-trip delay
 # TYPE ntp_delay gauge
-ntp_delay{server="europe.pool.ntp.org",version="3"} 0.039783477783203125
-# HELP ntp_tx_time Transmit timestamp in system time
-# TYPE ntp_tx_time gauge
-ntp_tx_time{server="europe.pool.ntp.org",version="3"} 1.7019496886073093e+09
-# HELP ntp_recv_time Receive timestamp in system time
-# TYPE ntp_recv_time gauge
-ntp_recv_time{server="europe.pool.ntp.org",version="3"} 1.701949688607213e+09
-# HELP ntp_orig_time Originate timestamp in system time
-# TYPE ntp_orig_time gauge
-ntp_orig_time{server="europe.pool.ntp.org",version="3"} 1.7019496885841284e+09
-# HELP ntp_ref_time Reference timestamp in system time
-# TYPE ntp_ref_time gauge
-ntp_ref_time{server="europe.pool.ntp.org",version="3"} 1.7019490234449077e+09
-# HELP ntp_dest_time Destination timestamp in system time
-# TYPE ntp_dest_time gauge
-ntp_dest_time{server="europe.pool.ntp.org",version="3"} 1.7019496886240082e+09
+ntp_delay{server="europe.pool.ntp.org",version="3"} 0.021947860717773438
 # HELP ntp_leap Leap indicator
 # TYPE ntp_leap gauge
 ntp_leap{server="europe.pool.ntp.org",version="3"} 0.0

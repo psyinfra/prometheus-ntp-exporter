@@ -35,13 +35,21 @@ def parse_args():
         default=3,
         help='NTP version')
     parser.add_argument(
+        '-e', '--extended',
+        dest='extended',
+        default=False,
+        action='store_true',
+        help=(
+            'Export transmit, receive, originate, and reference timestamps in '
+            'system time'))
+    parser.add_argument(
         '-l', '--log',
         dest='log_level',
         required=False,
         type=str,
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
         default='WARNING',
-        help='Specify logging level (DEBUG, INFO, WARNING, ERROR, CRITICAL)')
+        help='Specify logging level')
     return parser.parse_args()
 
 
@@ -60,9 +68,14 @@ def main():
         port = listen_addr.port if listen_addr.port else DEFAULT_PORT
         logger.info(f'Target NTP server: {args.ntp_server}')
         logger.info(f'NTP version: {args.ntp_version}')
+
+        if args.extended:
+            logger.info('Exporting extended timestamp data')
+
         REGISTRY.register(NTPExporter(
             ntp_server=args.ntp_server,
-            ntp_version=args.ntp_version))
+            ntp_version=args.ntp_version,
+            extended=args.extended))
         start_http_server(port, addr=addr)
         logger.info(f'Listening on {listen_addr.netloc}')
     except KeyboardInterrupt:
