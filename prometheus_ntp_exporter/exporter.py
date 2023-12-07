@@ -28,14 +28,21 @@ class NTPExporter:
         try:
             response = c.request(self.ntp_server, version=self.ntp_version)
         except ntplib.NTPException as exc:
+            response = None
             logger.error(f'NTPException({exc})')
-            g = GaugeMetricFamily(
-                name=f'{EXPORTER_PREFIX}_ntpexception',
-                labels=['server', 'version'],
-                documentation='NTPException (1 = True, 0 = False)')
+
+        g = GaugeMetricFamily(
+            name=f'{EXPORTER_PREFIX}_ntpexception',
+            labels=['server', 'version'],
+            documentation='NTPException (1 = True, 0 = False)')
+
+        if response is None:
             g.add_metric(labels, 1)
             yield g
             return
+        else:
+            g.add_metric(labels, 0)
+            yield g
 
         g = GaugeMetricFamily(
             name=f'{EXPORTER_PREFIX}_ntpexception',
@@ -45,49 +52,57 @@ class NTPExporter:
         yield g
 
         g = GaugeMetricFamily(
-            name=f'{EXPORTER_PREFIX}_offset', labels=['server', 'version'],
+            name=f'{EXPORTER_PREFIX}_offset',
+            labels=['server', 'version'],
             documentation='offset')
         g.add_metric(labels, response.offset)
         yield g
 
         g = GaugeMetricFamily(
-            name=f'{EXPORTER_PREFIX}_delay', labels=['server', 'version'],
+            name=f'{EXPORTER_PREFIX}_delay',
+            labels=['server', 'version'],
             documentation='round-trip delay')
         g.add_metric(labels, response.delay)
         yield g
 
         g = GaugeMetricFamily(
-            name=f'{EXPORTER_PREFIX}_tx_time', labels=['server', 'version'],
+            name=f'{EXPORTER_PREFIX}_tx_time',
+            labels=['server', 'version'],
             documentation='Transmit timestamp in system time')
         g.add_metric(labels, response.tx_time)
         yield g
 
         g = GaugeMetricFamily(
-            name=f'{EXPORTER_PREFIX}_recv_time', labels=['server', 'version'],
+            name=f'{EXPORTER_PREFIX}_recv_time',
+            labels=['server', 'version'],
             documentation='Receive timestamp in system time')
         g.add_metric(labels, response.recv_time)
         yield g
 
         g = GaugeMetricFamily(
-            name=f'{EXPORTER_PREFIX}_orig_time', labels=['server', 'version'],
+            name=f'{EXPORTER_PREFIX}_orig_time',
+            labels=['server', 'version'],
             documentation='Originate timestamp in system time')
         g.add_metric(labels, response.orig_time)
         yield g
 
         g = GaugeMetricFamily(
-            name=f'{EXPORTER_PREFIX}_ref_time', labels=['server', 'version'],
+            name=f'{EXPORTER_PREFIX}_ref_time',
+            labels=['server', 'version'],
             documentation='Reference timestamp in system time')
         g.add_metric(labels, response.ref_time)
         yield g
 
         g = GaugeMetricFamily(
-            name=f'{EXPORTER_PREFIX}_dest_time', labels=['server', 'version'],
+            name=f'{EXPORTER_PREFIX}_dest_time',
+            labels=['server', 'version'],
             documentation='Destination timestamp in system time')
         g.add_metric(labels, response.dest_time)
         yield g
 
         g = GaugeMetricFamily(
-            name=f'{EXPORTER_PREFIX}_leap', labels=['server', 'version'],
+            name=f'{EXPORTER_PREFIX}_leap',
+            labels=['server', 'version'],
             documentation='Leap indicator')
         g.add_metric(labels, response.leap)
         yield g

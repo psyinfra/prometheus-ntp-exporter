@@ -13,30 +13,44 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description='Python-based Prometheus exporter for NTP time offset')
     parser.add_argument(
-        '-w', '--web.listen-address', dest='listen_address', required=False,
-        type=str, default=f':{DEFAULT_PORT}',
+        '-w', '--web.listen-address',
+        dest='listen_address',
+        required=False,
+        type=str,
+        default=f':{DEFAULT_PORT}',
         help=f'Address and port to listen on (default = :{DEFAULT_PORT})')
     parser.add_argument(
-        '--ntp.server', dest='ntp_server', required=False, type=str,
-        default='europe.pool.ntp.org', help='Address of target NTP server')
+        '--ntp.server',
+        dest='ntp_server',
+        required=False,
+        type=str,
+        default='europe.pool.ntp.org',
+        help='Address of target NTP server')
     parser.add_argument(
-        '--ntp.version', dest='ntp_version', required=False, type=int,
-        default=3, help='NTP version')
+        '--ntp.version',
+        dest='ntp_version',
+        required=False,
+        type=int,
+        default=3,
+        help='NTP version')
     parser.add_argument(
-        '-l', '--log', dest='log_level', required=False, type=str,
+        '-l', '--log',
+        dest='log_level',
+        required=False,
+        type=str,
         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
-        default='WARNING', help='Specify logging level')
+        default='WARNING',
+        help='Specify logging level')
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
-
-    logger = logging.getLogger('prometheus_ntp_exporter')
-    logger.setLevel(args.log_level)
     logging.basicConfig(
         level=args.log_level,
         format='[%(asctime)s] %(levelname)s: %(message)s')
+    logger = logging.getLogger('prometheus_ntp_exporter')
+    logger.setLevel(args.log_level)
     logger.info(f'Log level: {logging.getLevelName(logger.level)}')
 
     try:
@@ -46,7 +60,8 @@ def main():
         logger.info(f'Target NTP server: {args.ntp_server}')
         logger.info(f'NTP version: {args.ntp_version}')
         REGISTRY.register(NTPExporter(
-            ntp_server=args.ntp_server, ntp_version=args.ntp_version))
+            ntp_server=args.ntp_server,
+            ntp_version=args.ntp_version))
         start_http_server(port, addr=addr)
         logger.info(f'Listening on {listen_addr.netloc}')
     except KeyboardInterrupt:
@@ -55,7 +70,7 @@ def main():
     except Exception as exc:
         logger.error(exc)
         logger.critical(
-            'Exporter shut down due while starting server. Please contact '
+            'Exporter shut down due while starting the server. Please contact '
             'your administrator.')
         exit(1)
 
