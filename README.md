@@ -36,52 +36,6 @@ This command exports the NTP response data requested from `europe.pool.ntp.org` 
 
 ### Output example
 ```text
-# HELP python_gc_objects_collected_total Objects collected during gc
-# TYPE python_gc_objects_collected_total counter
-python_gc_objects_collected_total{generation="0"} 341.0
-python_gc_objects_collected_total{generation="1"} 28.0
-python_gc_objects_collected_total{generation="2"} 0.0
-# HELP python_gc_objects_uncollectable_total Uncollectable objects found during GC
-# TYPE python_gc_objects_uncollectable_total counter
-python_gc_objects_uncollectable_total{generation="0"} 0.0
-python_gc_objects_uncollectable_total{generation="1"} 0.0
-python_gc_objects_uncollectable_total{generation="2"} 0.0
-# HELP python_gc_collections_total Number of times this generation was collected
-# TYPE python_gc_collections_total counter
-python_gc_collections_total{generation="0"} 41.0
-python_gc_collections_total{generation="1"} 3.0
-python_gc_collections_total{generation="2"} 0.0
-# HELP python_info Python platform information
-# TYPE python_info gauge
-python_info{implementation="CPython",major="3",minor="9",patchlevel="2",version="3.9.2"} 1.0
-# HELP process_virtual_memory_bytes Virtual memory size in bytes.
-# TYPE process_virtual_memory_bytes gauge
-process_virtual_memory_bytes 1.792e+08
-# HELP process_resident_memory_bytes Resident memory size in bytes.
-# TYPE process_resident_memory_bytes gauge
-process_resident_memory_bytes 2.0619264e+07
-# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
-# TYPE process_start_time_seconds gauge
-process_start_time_seconds 1.70194968066e+09
-# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
-# TYPE process_cpu_seconds_total counter
-process_cpu_seconds_total 0.09
-# HELP process_open_fds Number of open file descriptors.
-# TYPE process_open_fds gauge
-process_open_fds 6.0
-# HELP process_max_fds Maximum number of open file descriptors.
-# TYPE process_max_fds gauge
-process_max_fds 1024.0
-# HELP ntp_collector_collect_seconds Time spent to collect metrics from the NTP server
-# TYPE ntp_collector_collect_seconds summary
-ntp_collector_collect_seconds_count 1.0
-ntp_collector_collect_seconds_sum 8.909264579415321e-07
-# HELP ntp_collector_collect_seconds_created Time spent to collect metrics from the NTP server
-# TYPE ntp_collector_collect_seconds_created gauge
-ntp_collector_collect_seconds_created 1.701949681426648e+09
-# HELP ntp_ntpexception NTPException (1 = True, 0 = False)
-# TYPE ntp_ntpexception gauge
-ntp_ntpexception{server="europe.pool.ntp.org",version="3"} 0.0
 # HELP ntp_ntpexception NTPException (1 = True, 0 = False)
 # TYPE ntp_ntpexception gauge
 ntp_ntpexception{server="europe.pool.ntp.org",version="3"} 0.0
