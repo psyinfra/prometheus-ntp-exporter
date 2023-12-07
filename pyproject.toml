@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools"]
+build-backend= "setuptools.build_meta"
+
+[project]
+name = "prometheus_ntp_exporter"
+authors = [
+    {name = "Niels Reuter", email = "n.reuter@fz-juelich.de"},
+]
+description = "Python-based Prometheus exporter for NTP response offset"
+readme = {file = "README.md", content-type = "text/markdown"}
+requires-python = ">=3.9"
+keywords = ["ntp", "monitoring", "prometheus"]
+license = {text = "ISC"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: ISC License (ISCL)",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Topic :: System :: Monitoring",
+]
+dependencies = [
+    "ntplib",
+    "prometheus_client",
+]
+dynamic = ["version"]
+
+[project.scripts]
+prometheus_ntp_exporter = "prometheus_ntp_exporter.main:main"
+
+[project.urls]
+repository = "https://github.com/psyinfra/prometheus-ntp-exporter"
+issues = "https://github.com/psyinfra/prometheus-ntp-exporter/issues"
+
+[tool.setuptools]
+packages = ['prometheus_ntp_exporter']
+
+[tool.setuptools.dynamic]
+version = {attr = "prometheus_ntp_exporter.VERSION"}
