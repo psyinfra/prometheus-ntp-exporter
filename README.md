@@ -5,7 +5,7 @@ the response via the Prometheus client.
 
 ## Installation
 ```commandline
-git clone git@jugit.fz-juelich.de:inm7/infrastructure/loony_tools/prometheus-ntp-exporter.git
+git clone git@github.com:psyinfra/prometheus-ntp-exporter.git
 cd prometheus-ntp-exporter
 pip install .
 ```
